@@ -1,0 +1,27 @@
+#!/bin/bash
+set -e
+
+i=1
+mount_var=MOUNT_$i
+mount=${!mount_var}
+
+while [[ ${!mount_var} ]]; do
+  fstype_var=FSTYPE_$i
+  fstype=${!fstype_var}
+  mountpoint_var=MOUNTPOINT_$i
+  mountpoint=/mnt/host${!mountpoint_var}
+
+  if [[ $fstype ]]; then
+    echo Loading $fstype module
+    modprobe $fstype
+  fi
+
+  echo Mounting $mount at $mountpoint
+  mount $mount $mountpoint
+
+  i=$(($i + 1))
+  mount_var=MOUNT_$i
+  mount=${!mount_var}
+done
+
+cat
