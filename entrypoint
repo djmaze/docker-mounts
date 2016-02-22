@@ -24,4 +24,4 @@ while [[ ${!mount_var} ]]; do
   mount=${!mount_var}
 done
 
-cat
+while true; do sleep 5; done
